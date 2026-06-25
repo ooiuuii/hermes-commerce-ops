@@ -14,6 +14,8 @@ Third submission for @NousResearch's Hermes Agent Accelerated Business Hackathon
 
 Hermes Foundry showed approval orchestration. Hermes Sourcing Desk showed procurement savings. This one starts from a real EC payment: a live nopCommerce + Alipay order becomes signed payment proof, an 83% margin gate, fulfillment dispatch, and a verifier proof pack.
 
+Demo video: https://github.com/ooiuuii/hermes-commerce-ops/releases/download/v0.1-demo/hermes-commerce-ops-full-demo.en.andrew-nas-bgm.mp4
+
 Repo: https://github.com/ooiuuii/hermes-commerce-ops
 
 ## Discord Draft
@@ -33,6 +35,8 @@ Demo scenario:
 - Hermes decision: fulfill and seal proof
 
 The repo uses redacted proof artifacts, not raw payment screenshots or secrets. `npm run proof` regenerates payment reconciliation, margin gate, Hermes trace, fulfillment report, audit ledger, and manifest.
+
+Video: https://github.com/ooiuuii/hermes-commerce-ops/releases/download/v0.1-demo/hermes-commerce-ops-full-demo.en.andrew-nas-bgm.mp4
 
 Repo: https://github.com/ooiuuii/hermes-commerce-ops
 

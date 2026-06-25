@@ -4,6 +4,22 @@ Real paid e-commerce orders should not stop at "payment succeeded." Hermes Comme
 
 This is a separate Hermes Agent Accelerated Business Hackathon submission. It is related to Hermes Foundry and Hermes Sourcing Desk, but it demonstrates a different business surface: post-payment commerce operations.
 
+## Watch
+
+```text
+GitHub Release: https://github.com/ooiuuii/hermes-commerce-ops/releases/tag/v0.1-demo
+Direct MP4: https://github.com/ooiuuii/hermes-commerce-ops/releases/download/v0.1-demo/hermes-commerce-ops-full-demo.en.andrew-nas-bgm.mp4
+```
+
+Local generated copies:
+
+```text
+artifacts/videos/hermes-commerce-ops-full-demo.mp4
+artifacts/videos/hermes-commerce-ops-full-demo.en.andrew-nas-bgm.mp4
+```
+
+Large video files are intentionally not committed to normal Git history. They are generated locally and uploaded as release assets.
+
 ## Headline Claim
 
 ```text
