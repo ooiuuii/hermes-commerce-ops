@@ -1,0 +1,56 @@
+{
+  "schema": "hermes-commerce-ops.proof_manifest.v1",
+  "generated_at": "2026-06-25T16:23:30Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "project": "Hermes Commerce Ops",
+  "live_evidence": {
+    "domain": "ec.xingyipoxiao.cloud",
+    "order_id": 17,
+    "provider": "Alipay OpenAPI RSA2",
+    "smoke_ref": "artifacts/proof/live_nopcommerce_payment_smoke.json"
+  },
+  "generated_outputs": [
+    {
+      "path": "artifacts/proof/payment_reconciliation.json",
+      "sha256": "74526630f3966b9357f9efcb9ce74f99052da72b4b273ef5a20b1ebd2b2725c1"
+    },
+    {
+      "path": "artifacts/proof/margin_gate.json",
+      "sha256": "517717c7e6d176c7d42ec776b1bef9fdc6a4f3aa6683689f512402a2d95df157"
+    },
+    {
+      "path": "artifacts/proof/hermes_agent_trace.json",
+      "sha256": "6fd640163c20a0315d25334e326117bd9b597fcacda5071dd2f63098018ca0db"
+    },
+    {
+      "path": "artifacts/proof/fulfillment_report.json",
+      "sha256": "5c2e01afa3678c049c0818e47f5b18c014a63b66900365f928e8bf47bd222618"
+    },
+    {
+      "path": "artifacts/proof/commerce_audit_ledger.json",
+      "sha256": "213ab2b2a9b8696d5508c8bba052b2a54d51847f59647b8cb7940c4f4c5795d3"
+    }
+  ],
+  "static_evidence": [
+    {
+      "path": "artifacts/input/live-commerce-order.json",
+      "sha256": "859d414900595e87e4959b98fd60a5032ade8dc2e0a5d39854208874334ec2f2"
+    },
+    {
+      "path": "artifacts/proof/live_nopcommerce_payment_smoke.json",
+      "sha256": "0668c67561f59dedafe657d526794c75a27b9f1900b07e7cc7d92e655c31caf9"
+    }
+  ],
+  "verifier_claims": [
+    "A live Alipay order exists in nopCommerce.",
+    "The Alipay notify callback reached /Plugins/PaymentAliPay/Notify.",
+    "The order transitioned to paid and completed.",
+    "Hermes only fulfills after payment verification and a margin gate.",
+    "Public proof is redacted and does not contain payment secrets."
+  ],
+  "commands": {
+    "regenerate": "npm run proof",
+    "verify": "npm test",
+    "run_demo": "npm run dev"
+  }
+}

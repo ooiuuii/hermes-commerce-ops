@@ -1,0 +1,89 @@
+{
+  "schema": "hermes-commerce-ops.live_order_input.v1",
+  "captured_at": "2026-06-25T16:22:03Z",
+  "store": {
+    "domain": "ec.xingyipoxiao.cloud",
+    "platform": "nopCommerce 4.90.x",
+    "merchant_name": "Deqing Qiance Technology Co., Ltd.",
+    "merchant_name_zh": "德清乾策科技有限公司"
+  },
+  "order": {
+    "id": 17,
+    "guid": "C71031DD-CB23-4035-A370-BA578932D966",
+    "currency": "CNY",
+    "order_total": 1.0,
+    "payment_method": "Payments.AliPay",
+    "payment_status_id": 30,
+    "order_status_id": 30,
+    "created_on_utc": "2026-06-25T16:19:27.077Z",
+    "paid_date_utc": "2026-06-25T16:19:40.005Z"
+  },
+  "payment_evidence": {
+    "provider": "Alipay OpenAPI RSA2",
+    "app_id": "2021006164699080",
+    "seller_id": "2088780278049755",
+    "trade_no_redacted": "2026062623001481061459****02",
+    "trade_no_sha256": "4fd891846ac4a931d07b091cf3747160bb72e9d90b91dfee0d95ea08d908d62d",
+    "notify": {
+      "method": "POST",
+      "path": "/Plugins/PaymentAliPay/Notify",
+      "status": 200,
+      "content_length": 7,
+      "content_type": "text/plain; charset=utf-8"
+    },
+    "return": {
+      "method": "GET",
+      "path": "/Plugins/PaymentAliPay/Return",
+      "status": 302,
+      "method_param": "alipay.trade.wap.pay.return"
+    }
+  },
+  "order_notes": [
+    {
+      "time_utc": "2026-06-25T16:19:27.237Z",
+      "note": "Order placed"
+    },
+    {
+      "time_utc": "2026-06-25T16:19:40.010Z",
+      "note": "Order has been marked as paid"
+    },
+    {
+      "time_utc": "2026-06-25T16:19:40.043Z",
+      "note": "Order status has been changed to completed"
+    }
+  ],
+  "service": {
+    "sku": "HERMES-COMMERCE-SMOKE-001",
+    "name": "Hermes Commerce Ops paid-order smoke",
+    "customer_visible_deliverable": "A deterministic payment reconciliation and fulfillment proof pack",
+    "fulfillment_policy": {
+      "auto_fulfill_under_cny": 10,
+      "human_review_required_when": [
+        "signature verification fails",
+        "payment amount does not match order total",
+        "order is not paid",
+        "estimated fulfillment cost exceeds revenue",
+        "customer request asks for irreversible external action"
+      ]
+    }
+  },
+  "cost_model": {
+    "currency": "CNY",
+    "revenue": 1.0,
+    "estimated_model_cost": 0.11,
+    "estimated_tool_cost": 0.05,
+    "estimated_storage_cost": 0.01,
+    "estimated_total_cost": 0.17,
+    "minimum_margin": 0.35
+  },
+  "hermes_runtime": {
+    "model_lane": "Hermes / Nemotron-compatible commerce worker",
+    "agent_mesh": [
+      "payment verifier",
+      "margin gate",
+      "fulfillment worker",
+      "audit ledger"
+    ],
+    "hard_boundary": "Payment capture is handled by Alipay/nopCommerce; Hermes only acts after signed paid evidence is present."
+  }
+}

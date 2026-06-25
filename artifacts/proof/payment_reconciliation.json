@@ -1,0 +1,65 @@
+{
+  "schema": "hermes-commerce-ops.payment_reconciliation.v1",
+  "generated_at": "2026-06-25T16:23:10Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "source_refs": {
+    "order_input": "artifacts/input/live-commerce-order.json",
+    "live_smoke": "artifacts/proof/live_nopcommerce_payment_smoke.json"
+  },
+  "store": {
+    "domain": "ec.xingyipoxiao.cloud",
+    "platform": "nopCommerce 4.90.x",
+    "merchant_name": "Deqing Qiance Technology Co., Ltd.",
+    "merchant_name_zh": "德清乾策科技有限公司"
+  },
+  "order": {
+    "id": 17,
+    "guid": "C71031DD-CB23-4035-A370-BA578932D966",
+    "amount": 1,
+    "currency": "CNY",
+    "payment_method": "Payments.AliPay",
+    "payment_status_id": 30,
+    "order_status_id": 30,
+    "created_on_utc": "2026-06-25T16:19:27.077Z",
+    "paid_date_utc": "2026-06-25T16:19:40.005Z"
+  },
+  "alipay": {
+    "provider": "Alipay OpenAPI RSA2",
+    "app_id": "2021006164699080",
+    "seller_id": "2088780278049755",
+    "trade_no_redacted": "2026062623001481061459****02",
+    "trade_no_sha256": "4fd891846ac4a931d07b091cf3747160bb72e9d90b91dfee0d95ea08d908d62d",
+    "notify_path": "/Plugins/PaymentAliPay/Notify",
+    "notify_status": 200,
+    "return_path": "/Plugins/PaymentAliPay/Return",
+    "return_status": 302
+  },
+  "checks": [
+    {
+      "name": "signed_payment_callback_seen",
+      "result": true,
+      "evidence": "POST /Plugins/PaymentAliPay/Notify -> 200 text/plain; charset=utf-8"
+    },
+    {
+      "name": "customer_return_seen",
+      "result": true,
+      "evidence": "GET /Plugins/PaymentAliPay/Return?out_trade_no=17 -> 302 /zh"
+    },
+    {
+      "name": "order_marked_paid",
+      "result": true,
+      "evidence": "PaymentStatusId=30; PaidDateUtc=2026-06-25T16:19:40.005Z"
+    },
+    {
+      "name": "order_completed",
+      "result": true,
+      "evidence": "OrderStatusId=30"
+    },
+    {
+      "name": "no_sensitive_fields_in_public_proof",
+      "result": true,
+      "evidence": "trade number redacted and hashed; no card data stored"
+    }
+  ],
+  "decision": "payment_verified"
+}

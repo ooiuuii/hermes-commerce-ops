@@ -1,0 +1,34 @@
+{
+  "schema": "hermes-commerce-ops.hermes_agent_trace.v1",
+  "generated_at": "2026-06-25T16:23:18Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "trace_mode": "deterministic_replay_from_live_payment",
+  "model_lane": "Hermes / Nemotron-compatible commerce worker",
+  "events": [
+    {
+      "time": "00:00",
+      "actor": "Payment verifier",
+      "command": "reconcile nop order 17",
+      "result": "payment_verified"
+    },
+    {
+      "time": "00:04",
+      "actor": "Margin gate",
+      "command": "estimate fulfillment margin for HERMES-COMMERCE-SMOKE-001",
+      "result": "0.83 CNY gross profit; decision=dispatch_fulfillment_agent"
+    },
+    {
+      "time": "00:08",
+      "actor": "Fulfillment worker",
+      "command": "generate deterministic customer proof pack",
+      "result": "service report, payment reconciliation, and audit ledger prepared"
+    },
+    {
+      "time": "00:12",
+      "actor": "Audit ledger",
+      "command": "seal commerce trail",
+      "result": "paid order, callback evidence, cost estimate, and deliverable hash linked"
+    }
+  ],
+  "boundary": "Hermes acts only after Alipay/nopCommerce signed payment evidence exists; it does not handle card data, private keys, or payment capture."
+}

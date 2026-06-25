@@ -1,0 +1,26 @@
+{
+  "schema": "hermes-commerce-ops.fulfillment_report.v1",
+  "generated_at": "2026-06-25T16:23:22Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "order_id": 17,
+  "status": "fulfilled",
+  "deliverable": {
+    "title": "Paid-order reconciliation report",
+    "customer_safe_summary": "The live EC order was paid through Alipay, reconciled against nopCommerce, accepted by the margin gate, and converted into a proof pack.",
+    "included_evidence": [
+      "paid nopCommerce order state",
+      "Alipay notify and return routes",
+      "redacted transaction reference",
+      "cost and margin gate",
+      "Hermes agent trace",
+      "audit ledger"
+    ]
+  },
+  "deliverable_sha256": "a7f11d734553c974cba6ccc924ba857c7d5f73657ebfbb5b3f5767895ab6371c",
+  "customer_visible_result": "Hermes Commerce Ops can turn a real paid order into a verified, margin-aware fulfillment packet.",
+  "non_goals": [
+    "No card data is processed by Hermes.",
+    "No private payment keys are stored in the proof pack.",
+    "No irreversible external action is executed without a signed payment state."
+  ]
+}

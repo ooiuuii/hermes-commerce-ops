@@ -1,0 +1,37 @@
+{
+  "schema": "hermes-commerce-ops.live_nopcommerce_payment_smoke.v1",
+  "captured_at": "2026-06-25T16:22:03Z",
+  "capture_method": "read-only server inspection over SSH and SQL query",
+  "server": {
+    "host_redacted": "Tencent Cloud CVM 101.*",
+    "kubernetes_namespace": "nop-ec",
+    "deployment": "nopcommerce",
+    "service_node_port": 30086
+  },
+  "database_result": {
+    "order_id": 17,
+    "order_total_cny": 1.0,
+    "payment_method": "Payments.AliPay",
+    "payment_status_id": 30,
+    "order_status_id": 30,
+    "paid_date_utc": "2026-06-25T16:19:40.005Z",
+    "status_interpretation": "paid_and_completed"
+  },
+  "order_note_result": [
+    "Order placed",
+    "Order has been marked as paid",
+    "Order status has been changed to completed"
+  ],
+  "http_log_result": {
+    "notify": "POST /Plugins/PaymentAliPay/Notify -> 200 text/plain; charset=utf-8",
+    "return": "GET /Plugins/PaymentAliPay/Return?out_trade_no=17 -> 302 /zh",
+    "alipay_return_method": "alipay.trade.wap.pay.return",
+    "trade_no_redacted": "2026062623001481061459****02"
+  },
+  "safety": {
+    "contains_private_key": false,
+    "contains_bank_card": false,
+    "contains_customer_address": false,
+    "trade_no_is_redacted_and_hashed": true
+  }
+}

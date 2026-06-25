@@ -1,0 +1,38 @@
+{
+  "schema": "hermes-commerce-ops.commerce_audit_ledger.v1",
+  "generated_at": "2026-06-25T16:23:26Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "ledger": [
+    {
+      "time_utc": "2026-06-25T16:19:27.077Z",
+      "actor": "nopCommerce",
+      "action": "Order created",
+      "result": "Order 17 created for 1.00 CNY"
+    },
+    {
+      "time_utc": "2026-06-25T16:19:40.005Z",
+      "actor": "Alipay + nopCommerce",
+      "action": "Payment verified",
+      "result": "payment_verified"
+    },
+    {
+      "time_utc": "2026-06-25T16:23:14Z",
+      "actor": "Hermes margin gate",
+      "action": "Economic precheck",
+      "result": "83% margin; dispatch_fulfillment_agent"
+    },
+    {
+      "time_utc": "2026-06-25T16:23:22Z",
+      "actor": "Hermes fulfillment worker",
+      "action": "Deliverable generated",
+      "result": "a7f11d734553c974cba6ccc924ba857c7d5f73657ebfbb5b3f5767895ab6371c"
+    }
+  ],
+  "proof_links": {
+    "reconciliation": "artifacts/proof/payment_reconciliation.json",
+    "margin_gate": "artifacts/proof/margin_gate.json",
+    "hermes_trace": "artifacts/proof/hermes_agent_trace.json",
+    "fulfillment_report": "artifacts/proof/fulfillment_report.json"
+  },
+  "conclusion": "A real company EC payment entered the system, reconciled as paid, passed an autonomous margin gate, and produced an audit-grade fulfillment proof pack."
+}

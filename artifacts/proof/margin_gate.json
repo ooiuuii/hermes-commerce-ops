@@ -1,0 +1,51 @@
+{
+  "schema": "hermes-commerce-ops.margin_gate.v1",
+  "generated_at": "2026-06-25T16:23:14Z",
+  "generated_by": "scripts/generate-proof-pack.mjs",
+  "input_refs": {
+    "payment_reconciliation": "artifacts/proof/payment_reconciliation.json",
+    "order_input": "artifacts/input/live-commerce-order.json"
+  },
+  "service": {
+    "sku": "HERMES-COMMERCE-SMOKE-001",
+    "name": "Hermes Commerce Ops paid-order smoke",
+    "customer_visible_deliverable": "A deterministic payment reconciliation and fulfillment proof pack",
+    "fulfillment_policy": {
+      "auto_fulfill_under_cny": 10,
+      "human_review_required_when": [
+        "signature verification fails",
+        "payment amount does not match order total",
+        "order is not paid",
+        "estimated fulfillment cost exceeds revenue",
+        "customer request asks for irreversible external action"
+      ]
+    }
+  },
+  "economics": {
+    "currency": "CNY",
+    "revenue": 1,
+    "estimated_costs": {
+      "model": 0.11,
+      "tool": 0.05,
+      "storage": 0.01,
+      "total": 0.17
+    },
+    "gross_profit": 0.83,
+    "gross_margin": 0.83,
+    "minimum_margin": 0.35,
+    "decision": "accept_and_fulfill"
+  },
+  "guardrails": {
+    "payment_must_be_verified_first": true,
+    "irreversible_external_actions_allowed": false,
+    "customer_data_exposure": "redacted proof only",
+    "human_review_triggers": [
+      "signature verification fails",
+      "payment amount does not match order total",
+      "order is not paid",
+      "estimated fulfillment cost exceeds revenue",
+      "customer request asks for irreversible external action"
+    ]
+  },
+  "decision": "dispatch_fulfillment_agent"
+}

@@ -1,0 +1,26 @@
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+build/
+*.log
+*.tsbuildinfo
+
+# Generated media. Upload videos separately or attach them as release assets.
+artifacts/audio/
+artifacts/videos/
+artifacts/screenshots/
+
+# Local dependency snapshots and caches.
+vendor/
+*.tar.gz
+*.zip
+.vite/
+.cache/
+
+# OS/editor noise.
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
