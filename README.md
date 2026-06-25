@@ -39,12 +39,14 @@ The repo does not commit customer PII, private keys, full trade numbers, card da
 
 ## What You'll See
 
-1. A real Alipay-paid nopCommerce order enters Hermes Commerce Ops.
-2. Hermes reconciles the Alipay notify and return callbacks.
-3. The order is accepted only after the store shows Paid/Complete evidence.
-4. A margin gate decides whether fulfillment is profitable.
-5. A fulfillment packet is generated with PII redacted.
-6. `npm run proof` regenerates payment reconciliation, margin gate, Hermes trace, fulfillment report, audit ledger, and manifest.
+1. The live storefront shows the Qiance service product, cart, guest checkout, and AliPay/PayPal payment choices.
+2. A redacted merchant backend evidence scene shows order `#17` as Paid/Complete.
+3. A real Alipay-paid nopCommerce order enters Hermes Commerce Ops.
+4. Hermes reconciles the Alipay notify and return callbacks.
+5. The order is accepted only after the store shows Paid/Complete evidence.
+6. A margin gate decides whether fulfillment is profitable.
+7. A fulfillment packet is generated with PII redacted.
+8. `npm run proof` regenerates payment reconciliation, margin gate, Hermes trace, fulfillment report, audit ledger, and manifest.
 
 ## Why This Is Different
 

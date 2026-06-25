@@ -28,6 +28,18 @@ const englishCaptions = {
     "A live nopCommerce order paid through Alipay becomes payment proof, margin logic, fulfillment work, and an audit trail.",
   introPrecheck:
     "The agent can operate the business, but only after signed paid evidence and a profitable margin gate.",
+  customerStore:
+    "First, the customer side: a real company storefront sells a Qiance technical service package.",
+  customerCart:
+    "The buyer adds the service to cart and starts checkout on the live nopCommerce site.",
+  customerPayment:
+    "At checkout, the live payment choices include PayPal Commerce and AliPay Direct.",
+  customerConfirm:
+    "We stop before final confirmation here. The proof order used later was paid for real through Alipay.",
+  adminProof:
+    "Then the merchant backend evidence: order 17 is paid, complete, and tied to the Alipay callback path.",
+  adminBoundary:
+    "The backend proof is redacted: no admin password, customer address, card data, or full trade number is shown.",
   liveOrder: "Live demo: order 17 from ec.xingyipoxiao.cloud is paid through Alipay.",
   liveVerify:
     "Hermes reconciles notify and return callbacks, then checks that nopCommerce marked the order Paid and Complete.",
@@ -63,6 +75,7 @@ const browser = await chromium.launch({ channel: "chrome", headless: true });
 async function recordSegment({ name, url, holdAfterActionMs, action }) {
   const context = await browser.newContext({
     viewport: { width: 1920, height: 1080 },
+    ignoreHTTPSErrors: true,
     recordVideo: {
       dir: segmentDir,
       size: { width: 1920, height: 1080 },
@@ -141,6 +154,46 @@ async function openTab(page, label) {
   await page.evaluate(() => window.scrollTo(0, 0));
 }
 
+async function runCustomerCheckoutPath(page) {
+  await setCaption(page, caption("customerStore"));
+  await pause(page, 3600);
+  await page.locator("#add-to-cart-button-1").click();
+  await pause(page, 1600);
+  await setCaption(page, caption("customerCart"));
+  await page.goto("https://ec.xingyipoxiao.cloud/zh/cart", { waitUntil: "domcontentloaded" });
+  await page.locator("#termsofservice").check().catch(() => {});
+  await pause(page, 3600);
+  await page.locator("#checkout, button.checkout-button, input.checkout-button").first().click();
+  await pause(page, 1400);
+  await page.locator("button.checkout-as-guest-button").click();
+  await pause(page, 900);
+  await page.locator("#BillingNewAddress_FirstName").fill("Demo");
+  await page.locator("#BillingNewAddress_LastName").fill("Buyer");
+  await page.locator("#BillingNewAddress_Email").fill("demo.buyer@example.com");
+  await page.locator("#BillingNewAddress_Company").fill("Demo Company");
+  await page.locator("#BillingNewAddress_CountryId").selectOption("237");
+  await pause(page, 300);
+  await page.locator("#BillingNewAddress_StateProvinceId").selectOption("1797");
+  await page.locator("#BillingNewAddress_City").fill("San Francisco");
+  await page.locator("#BillingNewAddress_Address1").fill("Redacted demo address");
+  await page.locator("#BillingNewAddress_ZipPostalCode").fill("94105");
+  await page.locator("#BillingNewAddress_PhoneNumber").fill("13000000000");
+  await page.locator("#opc-billing").scrollIntoViewIfNeeded();
+  await pause(page, 1800);
+  await page.locator("button.new-address-next-step-button").click();
+  await pause(page, 2600);
+  await page.locator("#paymentmethod_1").check();
+  await page.locator("#opc-payment_method").scrollIntoViewIfNeeded();
+  await setCaption(page, caption("customerPayment"));
+  await pause(page, 4200);
+  await page.locator("button.payment-method-next-step-button").click();
+  await pause(page, 1900);
+  await page.locator("button.payment-info-next-step-button").click();
+  await pause(page, 1900);
+  await page.locator("#opc-confirm_order").scrollIntoViewIfNeeded();
+  await setCaption(page, caption("customerConfirm"));
+}
+
 function convertToMp4(input, output) {
   execFileSync(
     "ffmpeg",
@@ -178,8 +231,26 @@ const intro = await recordSegment({
   },
 });
 
+const customerCheckout = await recordSegment({
+  name: "02-live-customer-checkout",
+  url: "https://ec.xingyipoxiao.cloud/zh/qiance-tech-service",
+  holdAfterActionMs: 4200,
+  action: runCustomerCheckoutPath,
+});
+
+const adminEvidence = await recordSegment({
+  name: "03-merchant-backend-evidence",
+  url: `${baseUrl}/?scene=admin`,
+  holdAfterActionMs: 3600,
+  action: async (page) => {
+    await setCaption(page, caption("adminProof"));
+    await pause(page, 6500);
+    await setCaption(page, caption("adminBoundary"));
+  },
+});
+
 const demo = await recordSegment({
-  name: "02-live-demo",
+  name: "04-live-hermes-ops",
   url: `${baseUrl}/?pace=slow`,
   holdAfterActionMs: 4200,
   action: async (page) => {
@@ -207,7 +278,7 @@ const demo = await recordSegment({
 });
 
 const compare = await recordSegment({
-  name: "03-workflow-compare",
+  name: "05-workflow-compare",
   url: `${baseUrl}/?scene=compare`,
   holdAfterActionMs: 4500,
   action: async (page) => {
@@ -228,7 +299,12 @@ const compare = await recordSegment({
 await browser.close();
 
 const concatList = path.join(segmentDir, "concat.txt");
-await writeFile(concatList, [intro, demo, compare].map((file) => `file '${file.replaceAll("\\", "/")}'`).join("\n"));
+await writeFile(
+  concatList,
+  [intro, customerCheckout, adminEvidence, demo, compare]
+    .map((file) => `file '${file.replaceAll("\\", "/")}'`)
+    .join("\n"),
+);
 
 execFileSync(
   "ffmpeg",

@@ -230,7 +230,104 @@ function ComparisonScene() {
   );
 }
 
+function AdminEvidenceScene() {
+  const orderRows = [
+    ["Order ID", "#17"],
+    ["Payment", "Payments.AliPay"],
+    ["Payment status", "Paid"],
+    ["Order status", "Complete"],
+    ["Total", "¥1.00"],
+    ["Paid date", "2026-06-25 16:19 UTC"],
+  ];
+  const notes = [
+    "Order placed",
+    "Order has been marked as paid",
+    "Order status has been changed to completed",
+  ];
+
+  return (
+    <main className="cinema-shell admin-proof-scene">
+      <header className="cinema-topline">
+        <span>Merchant backend evidence</span>
+        <strong>Redacted nopCommerce order proof</strong>
+      </header>
+
+      <section className="admin-proof-layout">
+        <div className="admin-proof-copy">
+          <p>BACK OFFICE CHECK</p>
+          <h1>
+            The storefront paid.
+            <br />
+            The backend closed.
+            <br />
+            Hermes can operate.
+          </h1>
+          <div className="admin-proof-warning">
+            <ShieldCheck size={18} />
+            no admin password, customer address, card data, or full trade number is shown
+          </div>
+        </div>
+
+        <div className="admin-browser-frame">
+          <div className="admin-browser-top">
+            <div className="terminal-dots" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+            </div>
+            <strong>nopCommerce Administration / Orders / Edit #17</strong>
+            <em>read-only proof</em>
+          </div>
+          <div className="admin-order-shell">
+            <div className="admin-order-title">
+              <Receipt size={22} />
+              <div>
+                <span>Order #17</span>
+                <strong>Paid and completed</strong>
+              </div>
+              <BadgeCheck size={24} />
+            </div>
+            <div className="admin-order-grid">
+              {orderRows.map(([label, value], index) => (
+                <div className="admin-order-field" style={{ "--admin-index": index } as CSSProperties} key={label}>
+                  <span>{label}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="admin-notes">
+              <span>Order notes</span>
+              {notes.map((note, index) => (
+                <div className="admin-note" style={{ "--admin-index": index } as CSSProperties} key={note}>
+                  <CheckIcon />
+                  <strong>{note}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="admin-callback-row">
+              <div>
+                <span>Notify</span>
+                <strong>POST /Plugins/PaymentAliPay/Notify {"->"} 200</strong>
+              </div>
+              <div>
+                <span>Return</span>
+                <strong>GET /Plugins/PaymentAliPay/Return {"->"} 302</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
+
+function CheckIcon() {
+  return <BadgeCheck size={16} />;
+}
+
 export function CinematicTrailer() {
   const scene = new URLSearchParams(window.location.search).get("scene");
-  return scene === "compare" ? <ComparisonScene /> : <CinematicIntro />;
+  if (scene === "compare") return <ComparisonScene />;
+  if (scene === "admin") return <AdminEvidenceScene />;
+  return <CinematicIntro />;
 }
